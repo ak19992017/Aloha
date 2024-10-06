@@ -17,22 +17,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final fabs = [
     FloatingActionButton(
-      onPressed: () {},
-      tooltip: 'Scan QR',
-      child: Icon(Icons.qr_code_scanner),
-    ),
-    FloatingActionButton(onPressed: () {}, child: Icon(Icons.add)),
+        onPressed: () {},
+        tooltip: 'Scan QR',
+        child: Icon(Icons.qr_code_scanner)),
+    FloatingActionButton(
+        onPressed: () {}, tooltip: 'Add task', child: Icon(Icons.add)),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Aloha'),
-        centerTitle: true,
-        elevation: 10,
-      ),
+      appBar: AppBar(title: Text('Aloha'), centerTitle: true, elevation: 10),
       bottomNavigationBar: NavigationBar(
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         selectedIndex: currentPageIndex,
         onDestinationSelected: (int index) =>
             setState(() => currentPageIndex = index),
@@ -111,7 +108,10 @@ class Tasks extends StatelessWidget {
               title: Row(
                 children: [
                   Text({index + 1}.toString()),
-                  Text(' ${entries[index]['title']}'),
+                  Text(
+                    ' ${entries[index]['title']}',
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ],
               ),
               onTap: () {
@@ -144,7 +144,6 @@ class Categories extends StatelessWidget {
           CategoryIcon(icon: LucideIcons.shopping_bag, label: 'Shop'),
           CategoryIcon(icon: LucideIcons.indian_rupee, label: 'Pay'),
           CategoryIcon(icon: LucideIcons.pyramid, label: 'Social'),
-          CategoryIcon(icon: LucideIcons.gamepad_2, label: 'Games'),
         ],
       ),
     );
@@ -162,12 +161,10 @@ class CategoryIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: TextButton.icon(
-        onPressed: () {},
-        label: Text(label),
-        icon: Icon(icon),
-      ),
+    return TextButton.icon(
+      onPressed: () {},
+      label: Text(label),
+      icon: Icon(icon),
     );
   }
 }
