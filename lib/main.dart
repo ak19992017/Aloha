@@ -1,5 +1,5 @@
 import 'package:aloha/constant.dart';
-import 'package:aloha/home.dart';
+import 'package:aloha/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -14,21 +14,26 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Aloha Demo',
+      title: 'Aloha',
       debugShowCheckedModeBanner: false,
       // darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.system,
-      // theme: ThemeData(
-      //   fontFamily: 'Poppins',
-      //   useMaterial3: true,
-      // ),
-      home: HomeScreen(),
+      theme: ThemeData(
+        fontFamily: 'Poppins',
+        useMaterial3: true,
+      ),
+      home: SignInScreen(),
     );
   }
 }

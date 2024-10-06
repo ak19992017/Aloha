@@ -1,5 +1,7 @@
+import 'package:aloha/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Categories(),
     Tasks(),
   ];
+  final User? user = supabase.auth.currentUser;
 
   final fabs = [
     FloatingActionButton(
@@ -41,23 +44,18 @@ class _HomeScreenState extends State<HomeScreen> {
       body: screens[currentPageIndex],
       floatingActionButton: fabs[currentPageIndex],
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              curve: Curves.bounceOut,
-              decoration: BoxDecoration(color: Colors.redAccent),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings'),
-                onTap: () {}),
-            TextButton(onPressed: () {}, child: Text('LogOut')),
-            TextButton(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FilledButton(onPressed: () {}, child: Text('Log Out')),
+              FilledButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Close Drawer')),
-          ],
+                child: const Text('Close Drawer'),
+              ),
+              Text(user.toString())
+            ],
+          ),
         ),
       ),
     );
@@ -74,9 +72,11 @@ class ImageDetailPage extends StatelessWidget {
       body: Center(
         child: Hero(
           tag: 'image${imagePath.hashCode}',
-          child: Image.asset(
-            imagePath,
-            width: MediaQuery.of(context).size.width,
+          child: InteractiveViewer(
+            child: Image.asset(
+              imagePath,
+              width: MediaQuery.of(context).size.width,
+            ),
           ),
         ),
       ),
@@ -115,9 +115,12 @@ class Tasks extends StatelessWidget {
               title: Row(
                 children: [
                   Text({index + 1}.toString()),
-                  Text(
-                    ' ${entries[index]['title']}',
-                    overflow: TextOverflow.ellipsis,
+                  Expanded(
+                    child: Text(
+                      ' ${entries[index]['title']}',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                   ),
                 ],
               ),
@@ -172,24 +175,10 @@ class CategoryIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      child: Card(
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0))),
-          onPressed: () {},
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(icon),
-              Text(label),
-            ],
-          ),
-        ),
-      ),
+    return TextButton.icon(
+      onPressed: () {},
+      icon: Icon(icon),
+      label: Text(label),
     );
   }
 }
