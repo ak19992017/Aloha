@@ -41,16 +41,23 @@ class _HomeScreenState extends State<HomeScreen> {
       body: screens[currentPageIndex],
       floatingActionButton: fabs[currentPageIndex],
       drawer: Drawer(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              FilledButton(onPressed: () {}, child: Text('LogOut')),
-              FilledButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Close Drawer')),
-            ],
-          ),
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              curve: Curves.bounceOut,
+              decoration: BoxDecoration(color: Colors.redAccent),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+                onTap: () {}),
+            TextButton(onPressed: () {}, child: Text('LogOut')),
+            TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Close Drawer')),
+          ],
         ),
       ),
     );
@@ -136,16 +143,20 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GridView.count(
-        crossAxisCount: 3,
-        children: <Widget>[
-          CategoryIcon(icon: LucideIcons.shopping_bag, label: 'Shop'),
-          CategoryIcon(icon: LucideIcons.indian_rupee, label: 'Pay'),
-          CategoryIcon(icon: LucideIcons.pyramid, label: 'Social'),
-        ],
-      ),
+    return Column(
+      children: [
+        Carousal(),
+        GridView.count(
+          padding: const EdgeInsets.all(8.0),
+          shrinkWrap: true,
+          crossAxisCount: 3,
+          children: <Widget>[
+            CategoryIcon(icon: LucideIcons.shopping_bag, label: 'Shop'),
+            CategoryIcon(icon: LucideIcons.indian_rupee, label: 'Pay'),
+            CategoryIcon(icon: LucideIcons.pyramid, label: 'Social'),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -161,10 +172,89 @@ class CategoryIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton.icon(
-      onPressed: () {},
-      label: Text(label),
-      icon: Icon(icon),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Card(
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0))),
+          onPressed: () {},
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(icon),
+              Text(label),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Carousal extends StatefulWidget {
+  const Carousal({super.key});
+
+  @override
+  State<Carousal> createState() => _CarousalState();
+}
+
+class _CarousalState extends State<Carousal> {
+  late PageController _pageController;
+
+  List<String> images = [
+    "https://uhdwallpapers.org/uploads/converted/20/01/14/the-mandalorian-5k-1920x1080_477555-mm-90.jpg",
+    "https://wallpaperaccess.com/full/2637581.jpg",
+    "https://images.wallpapersden.com/image/download/purple-sunrise-4k-vaporwave_bGplZmiUmZqaraWkpJRmbmdlrWZlbWU.jpg",
+  ];
+
+  int activePage = 0;
+  List<Widget> indicators(imagesLength, currentIndex) {
+    return List<Widget>.generate(imagesLength, (index) {
+      return Container(
+        margin: EdgeInsets.all(3),
+        width: 10,
+        height: 10,
+        decoration: BoxDecoration(
+            color: currentIndex == index ? Colors.black : Colors.black26,
+            shape: BoxShape.circle),
+      );
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(viewportFraction: 0.85);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height / 4,
+          child: PageView.builder(
+            itemCount: images.length,
+            pageSnapping: true,
+            controller: _pageController,
+            onPageChanged: (page) => setState(() => activePage = page),
+            itemBuilder: (context, pagePosition) => Container(
+              margin: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
+              child: Image.network(images[pagePosition]),
+            ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [...indicators(images.length, activePage)],
+        )
+      ],
     );
   }
 }

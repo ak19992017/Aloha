@@ -22,10 +22,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Aloha Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Poppins',
-        useMaterial3: true,
-      ),
+      // darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.system,
+      // theme: ThemeData(
+      //   fontFamily: 'Poppins',
+      //   useMaterial3: true,
+      // ),
       home: HomeScreen(),
     );
   }
