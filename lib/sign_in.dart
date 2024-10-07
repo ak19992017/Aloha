@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:aloha/forgot.dart';
 import 'package:aloha/home.dart';
+import 'package:aloha/register.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -9,6 +11,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 final supabase = Supabase.instance.client;
 
 class SignInScreen extends StatefulWidget {
+  static const routeName = './signin';
+
   const SignInScreen({super.key});
 
   @override
@@ -26,16 +30,12 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     super.initState();
     supabase.auth.onAuthStateChange.listen((data) {
-      setState(() {
-        _userId = data.session?.user.id;
-      });
+      if (mounted) {
+        setState(() => _userId = data.session?.user.id);
+      }
       final AuthChangeEvent event = data.event;
       if (event == AuthChangeEvent.signedIn) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-          ),
-        );
+        Navigator.pushReplacementNamed(context, HomeScreen.routeName);
       }
     });
   }
@@ -129,7 +129,13 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
                   TextButton(
-                      onPressed: () => Navigator.pushNamed(context, '/forget'),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const ForgetPasswordScreen(),
+                          ),
+                        );
+                      },
                       child: const Text('Forgot Password?')),
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
@@ -143,8 +149,13 @@ class _SignInScreenState extends State<SignInScreen> {
                     children: [
                       const Text('Don\'t have an account?'),
                       TextButton(
-                          onPressed: () =>
-                              Navigator.pushNamed(context, '/register'),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const RegisterScreen(),
+                              ),
+                            );
+                          },
                           child: const Text('Register'))
                     ],
                   ),
@@ -158,7 +169,6 @@ class _SignInScreenState extends State<SignInScreen> {
                         redirectTo:
                             kIsWeb ? null : 'io.supabase.flutter://callback',
                       );
-                      print('user id ${_userId!}');
                     },
                     child: Text('Sign In with Google'),
                   )

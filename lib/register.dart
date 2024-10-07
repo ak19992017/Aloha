@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
+import 'package:aloha/sign_in.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -89,7 +90,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   const Text('Already having an account?'),
                   TextButton(
-                    onPressed: () => Navigator.pushNamed(context, '/signin'),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SignInScreen(),
+                        ),
+                      );
+                    },
                     child: const Text('Sign In'),
                   )
                 ],

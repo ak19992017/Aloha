@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:aloha/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const routeName = "./home";
   const HomeScreen({super.key});
 
   @override
@@ -16,7 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
     Categories(),
     Tasks(),
   ];
-  final User? user = supabase.auth.currentUser;
 
   final fabs = [
     FloatingActionButton(
@@ -48,12 +50,17 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              FilledButton(onPressed: () {}, child: Text('Log Out')),
+              FilledButton(
+                  onPressed: () async {
+                    await supabase.auth.signOut();
+                    Navigator.of(context)
+                        .popAndPushNamed(SignInScreen.routeName);
+                  },
+                  child: Text('Log Out')),
               FilledButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: const Text('Close Drawer'),
               ),
-              Text(user.toString())
             ],
           ),
         ),
@@ -106,6 +113,7 @@ class Tasks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: entries.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
@@ -115,12 +123,10 @@ class Tasks extends StatelessWidget {
               title: Row(
                 children: [
                   Text({index + 1}.toString()),
-                  Expanded(
-                    child: Text(
-                      ' ${entries[index]['title']}',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
+                  Text(
+                    ' ${entries[index]['title']}',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
                 ],
               ),
@@ -146,20 +152,26 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Carousal(),
-        GridView.count(
-          padding: const EdgeInsets.all(8.0),
-          shrinkWrap: true,
-          crossAxisCount: 3,
-          children: <Widget>[
-            CategoryIcon(icon: LucideIcons.shopping_bag, label: 'Shop'),
-            CategoryIcon(icon: LucideIcons.indian_rupee, label: 'Pay'),
-            CategoryIcon(icon: LucideIcons.pyramid, label: 'Social'),
-          ],
-        ),
-      ],
+    final User? user = supabase.auth.currentUser;
+    String prettyprint = JsonEncoder.withIndent('  ').convert(user);
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(
+        children: [
+          Carousal(),
+          GridView.count(
+            padding: const EdgeInsets.all(8.0),
+            shrinkWrap: true,
+            crossAxisCount: 3,
+            children: <Widget>[
+              CategoryIcon(icon: LucideIcons.shopping_bag, label: 'Shop'),
+              CategoryIcon(icon: LucideIcons.indian_rupee, label: 'Pay'),
+              CategoryIcon(icon: LucideIcons.pyramid, label: 'Social'),
+            ],
+          ),
+          Padding(padding: const EdgeInsets.all(8.0), child: Text(prettyprint))
+        ],
+      ),
     );
   }
 }
