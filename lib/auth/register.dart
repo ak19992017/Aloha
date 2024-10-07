@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
-import 'package:aloha/sign_in.dart';
+import 'package:aloha/auth/signin.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {

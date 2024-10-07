@@ -1,9 +1,8 @@
-import 'dart:convert';
-
-import 'package:aloha/sign_in.dart';
+import 'package:aloha/auth/signin.dart';
+import 'package:aloha/tasks/add.dart';
+import 'package:aloha/tasks/task.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = "./home";
@@ -17,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentPageIndex = 0;
   final screens = [
     Categories(),
-    Tasks(),
+    TaskScreen(),
   ];
 
   final fabs = [
@@ -120,15 +119,10 @@ class Tasks extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
           child: Card(
             child: ListTile(
-              title: Row(
-                children: [
-                  Text({index + 1}.toString()),
-                  Text(
-                    ' ${entries[index]['title']}',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ],
+              title: Text(
+                '${index + 1}. ${entries[index]['title']}',
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
               onTap: () {
                 Navigator.push(
@@ -152,8 +146,8 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = supabase.auth.currentUser;
-    String prettyprint = JsonEncoder.withIndent('  ').convert(user);
+    // final User? user = supabase.auth.currentUser;
+    // String prettyprint = JsonEncoder.withIndent('  ').convert(user);
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
@@ -169,7 +163,7 @@ class Categories extends StatelessWidget {
               CategoryIcon(icon: LucideIcons.pyramid, label: 'Social'),
             ],
           ),
-          Padding(padding: const EdgeInsets.all(8.0), child: Text(prettyprint))
+          // Padding(padding: const EdgeInsets.all(8.0), child: Text(prettyprint))
         ],
       ),
     );

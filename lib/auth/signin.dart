@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:aloha/forgot.dart';
+import 'package:aloha/auth/forgot.dart';
 import 'package:aloha/home.dart';
-import 'package:aloha/register.dart';
+import 'package:aloha/auth/register.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -59,6 +59,7 @@ class _SignInScreenState extends State<SignInScreen> {
     final GoogleSignIn googleSignIn = GoogleSignIn(
       clientId: iosClientId,
       serverClientId: webClientId,
+      scopes: ['profile', 'email'],
     );
     final googleUser = await googleSignIn.signIn();
     final googleAuth = await googleUser!.authentication;
