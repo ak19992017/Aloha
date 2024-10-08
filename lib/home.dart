@@ -1,6 +1,7 @@
 import 'package:aloha/auth/signin.dart';
+import 'package:aloha/constant.dart';
 import 'package:aloha/tasks/add.dart';
-import 'package:aloha/tasks/task.dart';
+import 'package:aloha/tasks/folders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
@@ -16,22 +17,31 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentPageIndex = 0;
   final screens = [
     Categories(),
-    TaskScreen(),
-  ];
-
-  final fabs = [
-    FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Scan QR',
-        child: Icon(Icons.qr_code_scanner)),
-    FloatingActionButton(
-        onPressed: () {}, tooltip: 'Add task', child: Icon(Icons.add)),
+    FoldersScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final fabs = [
+      FloatingActionButton(
+          onPressed: () {},
+          tooltip: 'Scan QR',
+          child: Icon(Icons.qr_code_scanner)),
+      FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddFoldersScreen(),
+              ),
+            );
+          },
+          tooltip: 'Add task',
+          child: Icon(Icons.add)),
+    ];
+
     return Scaffold(
-      appBar: AppBar(title: Text('Aloha'), centerTitle: true, elevation: 10),
+      appBar: AppBar(title: Text('Aloha'), centerTitle: true),
       bottomNavigationBar: NavigationBar(
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         selectedIndex: currentPageIndex,
@@ -64,79 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class ImageDetailPage extends StatelessWidget {
-  final String imagePath;
-  const ImageDetailPage(this.imagePath, {super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Image')),
-      body: Center(
-        child: Hero(
-          tag: 'image${imagePath.hashCode}',
-          child: InteractiveViewer(
-            child: Image.asset(
-              imagePath,
-              width: MediaQuery.of(context).size.width,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class Tasks extends StatelessWidget {
-  static const entries = [
-    {"id": 1, "title": "Brushing teeth twice a day", "image": "brush.jpg"},
-    {"id": 2, "title": "Taking a bath every day", "image": "bath.jpg"},
-    {"id": 3, "title": "Eating a healthy breakfast", "image": "eat.jpg"},
-    {"id": 4, "title": "Drinking water frequently", "image": "water.jpg"},
-    {"id": 5, "title": "Getting physical activity", "image": "exercise.jpg"},
-    {"id": 6, "title": "Reading every day", "image": "read.jpg"},
-    {
-      "id": 7,
-      "title": "Spending time with family and friends",
-      "image": "family.jpg"
-    },
-    {"id": 8, "title": "Respect elders", "image": "elder.jpg"},
-    {"id": 9, "title": "Help others", "image": "help.jpg"},
-    {"id": 10, "title": "Avoid procrastination", "image": "time.jpg"},
-  ];
-  const Tasks({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: entries.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
-          child: Card(
-            child: ListTile(
-              title: Text(
-                '${index + 1}. ${entries[index]['title']}',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        ImageDetailPage("assets/${entries[index]['image']}"),
-                  ),
-                );
-              },
-            ),
-          ),
-        );
-      },
     );
   }
 }

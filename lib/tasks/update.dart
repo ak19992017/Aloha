@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 // import 'package:task_master/others/constants.dart';
 // import 'package:task_master/others/firestore_services.dart';
 
-class UpdateTaskScreen extends StatefulWidget {
-  const UpdateTaskScreen({
+class UpdateFoldersScreen extends StatefulWidget {
+  const UpdateFoldersScreen({
     super.key,
     required this.task,
     required this.desc,
@@ -23,10 +23,10 @@ class UpdateTaskScreen extends StatefulWidget {
   final bool completed;
 
   @override
-  State<UpdateTaskScreen> createState() => _UpdateTaskScreenState();
+  State<UpdateFoldersScreen> createState() => _UpdateFoldersScreenState();
 }
 
-class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
+class _UpdateFoldersScreenState extends State<UpdateFoldersScreen> {
   late TextEditingController _task;
   late TextEditingController _desc;
   late String _dropdownValue;
@@ -106,8 +106,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                     items: folderList
                         .map<DropdownMenuItem<String>>((String value) =>
                             DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value)))
+                                value: value, child: Text(value)))
                         .toList(),
                     onChanged: (String? newValue) =>
                         setState(() => _dropdownValue = newValue!),

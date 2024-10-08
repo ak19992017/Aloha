@@ -85,21 +85,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 width: MediaQuery.of(context).size.width,
                 child: FilledButton(onPressed: () {}, child: Text('Register')),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Already having an account?'),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Already having an account?'),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => const SignInScreen(),
                         ),
-                      );
-                    },
-                    child: const Text('Sign In'),
-                  )
-                ],
+                      ),
+                      child: const Text('Sign In'),
+                    )
+                  ],
+                ),
               ),
             ],
           ),

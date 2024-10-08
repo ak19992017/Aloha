@@ -17,18 +17,19 @@ Color giveCategoryGetColor(String e) {
   } else if (e == 'code') {
     return Colors.blueAccent;
   } else if (e == 'play') {
-    return Colors.amberAccent.shade700;
+    return Colors.orange;
   }
-  return Colors.grey;
+  return Colors.brown.shade300;
 }
 
-List<String> folderList = ["home", "work", "code", "play"];
+List<String> folderList = ["home", "work", "code", "play", "habits"];
 
 List<String> imageList = [
   'pencil.png',
   'travel.png',
   'takeaway-cup.png',
-  'rocket.png'
+  'rocket.png',
+  'clock.png',
 ];
 
 // PrimaryColor is of type Color
@@ -74,4 +75,23 @@ class AppColors {
     };
     return MaterialColor(color.value, colorShades);
   }
+}
+
+class Task {
+  int id;
+  String task;
+  String description;
+  bool completed;
+  String color;
+  String category;
+
+  // Constructor with named parameters for flexibility
+  Task({
+    required this.id,
+    required this.task,
+    this.description = '',
+    this.completed = false,
+    this.color = 'white',
+    this.category = 'uncategorized',
+  });
 }

@@ -24,12 +24,15 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Forgot Password',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Forgot Password',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
                   ),
                   const Text(
                     'Provide your email and we will send you a link to reset your password',
@@ -48,19 +51,24 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: FilledButton(
-                      onPressed: () {},
-                      child: Text('Send recovery link'),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: FilledButton(
+                        onPressed: () {},
+                        child: Text('Send recovery link'),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Go Back'),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Go Back'),
+                    ),
                   ),
                 ],
               ),

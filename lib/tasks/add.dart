@@ -1,19 +1,14 @@
-// ignore_for_file: avoid_print, unused_import
 import 'package:aloha/constant.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:task_master/others/constants.dart';
-// import 'package:task_master/others/firestore_services.dart';
 
-class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+class AddFoldersScreen extends StatefulWidget {
+  const AddFoldersScreen({super.key});
 
   @override
-  _AddTaskScreenState createState() => _AddTaskScreenState();
+  State<AddFoldersScreen> createState() => _AddFoldersScreenState();
 }
 
-class _AddTaskScreenState extends State<AddTaskScreen> {
+class _AddFoldersScreenState extends State<AddFoldersScreen> {
   final TextEditingController _task = TextEditingController();
   final TextEditingController _description = TextEditingController();
 
@@ -21,12 +16,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   bool _completed = false;
   @override
   Widget build(BuildContext context) {
-    // FirestoreServices firestoreServices = FirestoreServices();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Add Task'),
-          // backgroundColor: giveCategoryGetColor(_dropdownValue),
           elevation: 0,
           centerTitle: true,
         ),
@@ -84,8 +77,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     items: folderList
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value));
+                          value: value, child: Text(value));
                     }).toList(),
                     onChanged: (String? newValue) =>
                         setState(() => _dropdownValue = newValue!),

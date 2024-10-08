@@ -129,15 +129,19 @@ class _SignInScreenState extends State<SignInScreen> {
                       ],
                     ),
                   ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const ForgetPasswordScreen(),
-                          ),
-                        );
-                      },
-                      child: const Text('Forgot Password?')),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const ForgetPasswordScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text('Forgot Password?')),
+                  ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: FilledButton(
@@ -145,20 +149,23 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: Text('Sign In'),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('Don\'t have an account?'),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const RegisterScreen(),
-                              ),
-                            );
-                          },
-                          child: const Text('Register'))
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Don\'t have an account?'),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const RegisterScreen(),
+                                ),
+                              );
+                            },
+                            child: const Text('Register'))
+                      ],
+                    ),
                   ),
                   FilledButton(
                     onPressed: () async {
@@ -172,7 +179,16 @@ class _SignInScreenState extends State<SignInScreen> {
                       );
                     },
                     child: Text('Sign In with Google'),
-                  )
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text('Home'))
                 ],
               ),
             ),
