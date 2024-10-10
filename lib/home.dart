@@ -53,43 +53,47 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Icon(Icons.qr_code_scanner)),
     ];
 
-    return Scaffold(
-      appBar: AppBar(),
-      bottomNavigationBar: NavigationBar(
-        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-        selectedIndex: currentPageIndex,
-        onDestinationSelected: (int index) =>
-            setState(() => currentPageIndex = index),
-        destinations: const <Widget>[
-          NavigationDestination(icon: Icon(LucideIcons.house), label: 'Home'),
-          NavigationDestination(icon: Icon(LucideIcons.box), label: 'Tasks'),
-          NavigationDestination(
-              icon: Icon(LucideIcons.shopping_bag), label: 'Shop'),
-          NavigationDestination(
-              icon: Icon(LucideIcons.pyramid), label: 'Social'),
-          NavigationDestination(
-              icon: Icon(LucideIcons.indian_rupee), label: 'Pay'),
-        ],
-      ),
-      body: screens[currentPageIndex],
-      floatingActionButton: fabs[currentPageIndex],
-      drawer: Drawer(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              FilledButton(
-                  onPressed: () async {
-                    await supabase.auth.signOut();
-                    Navigator.of(context)
-                        .popAndPushNamed(SignInScreen.routeName);
-                  },
-                  child: Text('Log Out')),
-              FilledButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Close Drawer'),
-              ),
-            ],
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: NavigationBar(
+          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+          selectedIndex: currentPageIndex,
+          onDestinationSelected: (int index) =>
+              setState(() => currentPageIndex = index),
+          destinations: const <Widget>[
+            NavigationDestination(icon: Icon(LucideIcons.house), label: 'Home'),
+            NavigationDestination(icon: Icon(LucideIcons.box), label: 'Tasks'),
+            NavigationDestination(
+                icon: Icon(LucideIcons.shopping_bag), label: 'Shop'),
+            NavigationDestination(
+                icon: Icon(LucideIcons.pyramid), label: 'Social'),
+            NavigationDestination(
+                icon: Icon(LucideIcons.indian_rupee), label: 'Pay'),
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.fromLTRB(2, 8, 2, 0),
+          child: screens[currentPageIndex],
+        ),
+        floatingActionButton: fabs[currentPageIndex],
+        drawer: Drawer(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FilledButton(
+                    onPressed: () async {
+                      await supabase.auth.signOut();
+                      Navigator.of(context)
+                          .popAndPushNamed(SignInScreen.routeName);
+                    },
+                    child: Text('Log Out')),
+                FilledButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Close Drawer'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -115,12 +119,42 @@ class Home extends StatelessWidget {
   }
 }
 
-class Social extends StatelessWidget {
+class Social extends StatefulWidget {
   const Social({super.key});
 
   @override
+  State<Social> createState() => _SocialState();
+}
+
+class _SocialState extends State<Social> {
+  int? _value = 0;
+  List<String> chipList = ['Feed', 'News', 'Jobs'];
+  @override
   Widget build(BuildContext context) {
-    return Center(child: const Text('Social'));
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Wrap(
+          spacing: 5.0,
+          children: List<Widget>.generate(
+            3,
+            (int index) {
+              return ChoiceChip.elevated(
+                label: Text(chipList[index]),
+                selected: _value == index,
+                onSelected: (bool selected) {
+                  setState(() {
+                    _value = selected ? index : null;
+                  });
+                },
+              );
+            },
+          ).toList(),
+        ),
+        Center(child: const Text('Social')),
+      ],
+    );
   }
 }
 

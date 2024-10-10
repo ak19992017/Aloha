@@ -180,7 +180,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                     child: Text('Sign In with Google'),
                   ),
-                  TextButton(
+                  FilledButton(
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
