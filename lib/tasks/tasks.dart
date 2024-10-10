@@ -24,7 +24,10 @@ class _TasksScreenState extends State<TasksScreen> {
         slivers: [
           //appbar
           SliverAppBar.large(
-            title: Text(widget.text.toUpperCase()),
+            title: Text(
+              widget.text.toUpperCase(),
+              style: Theme.of(context).textTheme.headlineLarge,
+            ),
             centerTitle: true,
             elevation: 10,
           ),
@@ -53,13 +56,17 @@ class _TasksScreenState extends State<TasksScreen> {
                           task['task'],
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                            // decoration:
-                            // task['completed'] ? TextDecoration.lineThrough : null,
-                            // decorationThickness: 3,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge
+                              ?.copyWith(color: Colors.white),
+                          // TextStyle(
+                          // color: Colors.white,
+                          // fontSize: 25,
+                          // decoration:
+                          // task['completed'] ? TextDecoration.lineThrough : null,
+                          // decorationThickness: 3,
+                          // ),
                         ),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),

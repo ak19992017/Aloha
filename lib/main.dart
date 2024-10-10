@@ -9,9 +9,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
-    url: SuperbaseCredentials.url,
-    anonKey: SuperbaseCredentials.key,
-  );
+      url: SuperbaseCredentials.url, anonKey: SuperbaseCredentials.key);
 
   runApp(const MyApp());
 }
@@ -29,8 +27,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Aloha',
       debugShowCheckedModeBanner: false,
-      darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.system,
+      // darkTheme: ThemeData.dark(),
+      // themeMode: ThemeMode.system,
       theme: ThemeData(fontFamily: 'Poppins', useMaterial3: true),
       initialRoute: SplashScreen.routeName,
       routes: {

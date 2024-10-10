@@ -16,17 +16,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currentPageIndex = 0;
   final screens = [
-    Categories(),
+    Home(),
     FoldersScreen(),
+    Shop(),
+    Social(),
+    Pay(),
   ];
 
   @override
   Widget build(BuildContext context) {
     final fabs = [
       FloatingActionButton(
-          onPressed: () {},
-          tooltip: 'Scan QR',
-          child: Icon(Icons.qr_code_scanner)),
+          onPressed: () {}, tooltip: 'Search', child: Icon(Icons.search)),
       FloatingActionButton(
           onPressed: () {
             Navigator.push(
@@ -37,11 +38,23 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
           tooltip: 'Add task',
-          child: Icon(Icons.add)),
+          child: Icon(LucideIcons.plus)),
+      FloatingActionButton(
+          onPressed: () {},
+          tooltip: 'Cart',
+          child: Icon(LucideIcons.shopping_cart)),
+      FloatingActionButton(
+          onPressed: () {},
+          tooltip: 'Friends',
+          child: Icon(LucideIcons.message_circle)),
+      FloatingActionButton(
+          onPressed: () {},
+          tooltip: 'Scan QR',
+          child: Icon(Icons.qr_code_scanner)),
     ];
 
     return Scaffold(
-      appBar: AppBar(title: Text('Aloha'), centerTitle: true),
+      appBar: AppBar(),
       bottomNavigationBar: NavigationBar(
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         selectedIndex: currentPageIndex,
@@ -50,6 +63,12 @@ class _HomeScreenState extends State<HomeScreen> {
         destinations: const <Widget>[
           NavigationDestination(icon: Icon(LucideIcons.house), label: 'Home'),
           NavigationDestination(icon: Icon(LucideIcons.box), label: 'Tasks'),
+          NavigationDestination(
+              icon: Icon(LucideIcons.shopping_bag), label: 'Shop'),
+          NavigationDestination(
+              icon: Icon(LucideIcons.pyramid), label: 'Social'),
+          NavigationDestination(
+              icon: Icon(LucideIcons.indian_rupee), label: 'Pay'),
         ],
       ),
       body: screens[currentPageIndex],
@@ -78,51 +97,39 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class Categories extends StatelessWidget {
-  const Categories({super.key});
+class Shop extends StatelessWidget {
+  const Shop({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final User? user = supabase.auth.currentUser;
-    // String prettyprint = JsonEncoder.withIndent('  ').convert(user);
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Column(
-        children: [
-          Carousal(),
-          GridView.count(
-            padding: const EdgeInsets.all(8.0),
-            shrinkWrap: true,
-            crossAxisCount: 3,
-            children: <Widget>[
-              CategoryIcon(icon: LucideIcons.shopping_bag, label: 'Shop'),
-              CategoryIcon(icon: LucideIcons.indian_rupee, label: 'Pay'),
-              CategoryIcon(icon: LucideIcons.pyramid, label: 'Social'),
-            ],
-          ),
-          // Padding(padding: const EdgeInsets.all(8.0), child: Text(prettyprint))
-        ],
-      ),
-    );
+    return Center(child: Text('Shop'));
   }
 }
 
-class CategoryIcon extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  const CategoryIcon({
-    super.key,
-    required this.icon,
-    required this.label,
-  });
+class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return TextButton.icon(
-      onPressed: () {},
-      icon: Icon(icon),
-      label: Text(label),
-    );
+    return Center(child: const Text('Home'));
+  }
+}
+
+class Social extends StatelessWidget {
+  const Social({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: const Text('Social'));
+  }
+}
+
+class Pay extends StatelessWidget {
+  const Pay({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: const Text('Pay'));
   }
 }
 

@@ -22,14 +22,13 @@ Color giveCategoryGetColor(String e) {
   return Colors.brown.shade300;
 }
 
-List<String> folderList = ["home", "work", "code", "play", "habits"];
+List<String> folderList = ["home", "work", "code", "play"];
 
 List<String> imageList = [
   'pencil.png',
   'travel.png',
   'takeaway-cup.png',
   'rocket.png',
-  'clock.png',
 ];
 
 // PrimaryColor is of type Color

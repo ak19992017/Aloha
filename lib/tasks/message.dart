@@ -11,7 +11,7 @@ class Message extends StatefulWidget {
 }
 
 class _MessageState extends State<Message> {
-  bool _locked = false;
+  bool _locked = true;
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -26,8 +26,7 @@ class _MessageState extends State<Message> {
               const Icon(LucideIcons.chevron_up, color: Colors.grey, size: 30),
               Text(
                 widget.task,
-                style:
-                    const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 35),
                 overflow: TextOverflow.visible,
                 textAlign: TextAlign.center,
               ),
@@ -49,7 +48,7 @@ class _MessageState extends State<Message> {
                 spacing: 10,
                 runSpacing: 10,
                 children: [
-                  FilledButton.icon(
+                  ElevatedButton.icon(
                     label: Text(_locked ? 'Lock' : 'Unlock'),
                     icon: Icon(
                         _locked ? LucideIcons.lock : LucideIcons.lock_open),
@@ -57,19 +56,19 @@ class _MessageState extends State<Message> {
                     // color: Colors.green,
                     // color: Color(int.parse(widget.data['color'])).withOpacity(1),
                   ),
-                  FilledButton.icon(
+                  ElevatedButton.icon(
                     label: Text('Close'),
                     icon: Icon(LucideIcons.x),
                     onPressed: () => Navigator.pop(context),
                   ),
                   if (!_locked)
-                    FilledButton.icon(
+                    ElevatedButton.icon(
                       label: Text('Delete'),
                       icon: Icon(LucideIcons.trash_2),
                       onPressed: () => Navigator.pop(context),
                     ),
                   if (!_locked)
-                    FilledButton.icon(
+                    ElevatedButton.icon(
                       label: Text('Edit'),
                       icon: Icon(LucideIcons.pencil),
                       onPressed: () => {
