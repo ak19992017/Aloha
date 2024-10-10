@@ -1,7 +1,6 @@
 import 'package:aloha/auth/signin.dart';
 import 'package:aloha/constant.dart';
 import 'package:aloha/tasks/details.dart';
-import 'package:aloha/tasks/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
@@ -27,7 +26,7 @@ class _TasksScreenState extends State<TasksScreen> {
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         centerTitle: true,
-        elevation: 10,
+        // elevation: 10,
         leading: IconButton.filledTonal(
           icon: Icon(LucideIcons.chevron_left),
           onPressed: () => Navigator.pop(context),

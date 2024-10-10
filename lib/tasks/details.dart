@@ -1,4 +1,3 @@
-import 'package:aloha/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
@@ -23,8 +22,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
               style: Theme.of(context).textTheme.headlineLarge),
           centerTitle: true,
           elevation: 10,
+          stretch: true,
           expandedHeight: 250,
-          pinned: false,
+          // flexibleSpace:
+          // FlexibleSpaceBar(background: Container(color: Colors.amber)),
+          pinned: true,
+          floating: true,
+          snap: true,
           actions: [
             IconButton.filledTonal(
               icon: Icon(LucideIcons.star),

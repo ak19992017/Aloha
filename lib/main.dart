@@ -27,11 +27,6 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Aloha',
       debugShowCheckedModeBanner: false,
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        fontFamily: "Poppins",
-      ),
-      themeMode: ThemeMode.system,
       theme: ThemeData(
         fontFamily: 'Poppins',
         useMaterial3: true,
