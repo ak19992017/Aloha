@@ -16,7 +16,7 @@ class _TasksScreenState extends State<TasksScreen> {
   Widget build(BuildContext context) {
     final future = supabase
         .from('tasks')
-        .select('task,description')
+        .select()
         .eq('category', widget.text.toLowerCase())
         .order('id');
     return Scaffold(
@@ -75,6 +75,7 @@ class _TasksScreenState extends State<TasksScreen> {
                         builder: (context) => DetailsScreen(
                               task: task['task'],
                               description: task['description'],
+                              category: task['category'],
                             )),
                   ),
                   onLongPress: () {},

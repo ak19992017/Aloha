@@ -1,6 +1,7 @@
 import 'package:aloha/auth/signin.dart';
 // ignore: unused_import
 import 'package:aloha/constant.dart';
+import 'package:aloha/social/social.dart';
 import 'package:aloha/tasks/add.dart';
 import 'package:aloha/tasks/folders.dart';
 import 'package:flutter/material.dart';
@@ -93,6 +94,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: const Text('Close Drawer'),
                 ),
+                ListTile(
+                  title: Text('Settings'),
+                  leading: Icon(Icons.settings),
+                ),
               ],
             ),
           ),
@@ -117,45 +122,6 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(child: const Text('Home'));
-  }
-}
-
-class Social extends StatefulWidget {
-  const Social({super.key});
-
-  @override
-  State<Social> createState() => _SocialState();
-}
-
-class _SocialState extends State<Social> {
-  int? _value = 0;
-  List<String> chipList = ['Feed', 'News', 'Jobs'];
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Wrap(
-          spacing: 5.0,
-          children: List<Widget>.generate(
-            3,
-            (int index) {
-              return ChoiceChip.elevated(
-                label: Text(chipList[index]),
-                selected: _value == index,
-                onSelected: (bool selected) {
-                  setState(() {
-                    _value = selected ? index : null;
-                  });
-                },
-              );
-            },
-          ).toList(),
-        ),
-        Center(child: const Text('Social')),
-      ],
-    );
   }
 }
 

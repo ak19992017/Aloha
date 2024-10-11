@@ -1,5 +1,6 @@
 import 'package:aloha/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
 class AddFoldersScreen extends StatefulWidget {
   const AddFoldersScreen({super.key});
@@ -22,6 +23,10 @@ class _AddFoldersScreenState extends State<AddFoldersScreen> {
           title: const Text('Add Task'),
           elevation: 0,
           centerTitle: true,
+          leading: IconButton.filledTonal(
+            icon: Icon(LucideIcons.chevron_left),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
         body: Form(
           child: Padding(
