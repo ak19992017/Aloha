@@ -124,10 +124,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     icon: Icon(LucideIcons.mic),
                     onPressed: () {},
                     label: Text('Audio')),
-                FilledButton.tonalIcon(
-                    icon: Icon(LucideIcons.map_pin),
-                    onPressed: () {},
-                    label: Text('Location')),
               ],
             ),
           ),

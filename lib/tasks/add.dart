@@ -39,12 +39,12 @@ class _AddFoldersScreenState extends State<AddFoldersScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 24.0),
-                      const Text('Task',
+                      const Text('Title',
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       const SizedBox(height: 8.0),
                       TextFormField(
                         decoration: const InputDecoration(
-                          hintText: 'Enter task here',
+                          hintText: 'Enter title here',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(12),

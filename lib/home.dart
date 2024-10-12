@@ -6,6 +6,8 @@ import 'package:aloha/tasks/add.dart';
 import 'package:aloha/tasks/folders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:flutter_quill/flutter_quill.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = "./home";
@@ -84,19 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 FilledButton(
-                    onPressed: () async {
-                      await supabase.auth.signOut();
-                      Navigator.of(context)
-                          .popAndPushNamed(SignInScreen.routeName);
-                    },
-                    child: Text('Log Out')),
-                FilledButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: const Text('Close Drawer'),
-                ),
-                ListTile(
-                  title: Text('Settings'),
-                  leading: Icon(Icons.settings),
                 ),
               ],
             ),
@@ -116,12 +107,59 @@ class Shop extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final User? user = supabase.auth.currentUser;
+  final QuillController _controller = QuillController.basic();
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void signOutFunction() async {
+    await supabase.auth.signOut();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Center(child: const Text('Home'));
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(user!.email.toString()),
+          FilledButton(
+              onPressed: () {
+                signOutFunction();
+                Navigator.of(context).popAndPushNamed(SignInScreen.routeName);
+              },
+              child: Text('Log Out')),
+          QuillSimpleToolbar(
+            controller: _controller,
+            configurations: const QuillSimpleToolbarConfigurations(
+              showFontFamily: false,
+              showSubscript: false,
+              showSuperscript: false,
+              showCodeBlock: false,
+              showDirection: true,
+              showAlignmentButtons: true,
+            ),
+          ),
+          Expanded(
+            child: QuillEditor.basic(
+              controller: _controller,
+              configurations: const QuillEditorConfigurations(),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
 

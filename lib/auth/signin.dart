@@ -167,7 +167,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ],
                     ),
                   ),
-                  FilledButton(
+                  IconButton(
                     onPressed: () async {
                       if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
                         return _nativeGoogleSignIn();
@@ -178,7 +178,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             kIsWeb ? null : 'io.supabase.flutter://callback',
                       );
                     },
-                    child: Text('Sign In with Google'),
+                    icon: Image.asset('./assets/google.png', width: 50),
                   ),
                   FilledButton(
                       onPressed: () {

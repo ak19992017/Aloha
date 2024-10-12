@@ -20,17 +20,15 @@ class _SocialState extends State<Social> {
           spacing: 5.0,
           children: List<Widget>.generate(
             3,
-            (int index) {
-              return ChoiceChip.elevated(
-                label: Text(chipList[index]),
-                selected: _value == index,
-                onSelected: (bool selected) {
-                  setState(() {
-                    _value = selected ? index : null;
-                  });
-                },
-              );
-            },
+            (int index) => ChoiceChip.elevated(
+              label: Text(chipList[index]),
+              selected: _value == index,
+              onSelected: (bool selected) {
+                setState(() {
+                  _value = selected ? index : null;
+                });
+              },
+            ),
           ).toList(),
         ),
         Center(child: const Text('Social')),
