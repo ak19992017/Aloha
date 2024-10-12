@@ -116,12 +116,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final User? user = supabase.auth.currentUser;
-  final QuillController _controller = QuillController.basic();
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   void signOutFunction() async {
     await supabase.auth.signOut();
@@ -140,23 +134,6 @@ class _HomeState extends State<Home> {
                 Navigator.of(context).popAndPushNamed(SignInScreen.routeName);
               },
               child: Text('Log Out')),
-          QuillSimpleToolbar(
-            controller: _controller,
-            configurations: const QuillSimpleToolbarConfigurations(
-              showFontFamily: false,
-              showSubscript: false,
-              showSuperscript: false,
-              showCodeBlock: false,
-              showDirection: true,
-              showAlignmentButtons: true,
-            ),
-          ),
-          Expanded(
-            child: QuillEditor.basic(
-              controller: _controller,
-              configurations: const QuillEditorConfigurations(),
-            ),
-          )
         ],
       ),
     );

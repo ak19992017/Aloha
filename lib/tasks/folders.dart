@@ -44,7 +44,7 @@ class _FoldersScreenState extends State<FoldersScreen> {
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          // Image.asset('assets/${imageList[index]}'),
+                          Image.asset('assets/${imageList[index]}'),
                           FittedBox(
                             child: Text(
                               folderList[index].toUpperCase(),
@@ -62,10 +62,6 @@ class _FoldersScreenState extends State<FoldersScreen> {
                 },
                 childCount: folderList.length,
               ),
-            ),
-            SliverToBoxAdapter(
-              child: Text('Todo',
-                  style: Theme.of(context).textTheme.displayMedium),
             ),
           ],
         ),

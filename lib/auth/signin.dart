@@ -168,14 +168,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () async {
-                      if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
-                        return _nativeGoogleSignIn();
-                      }
-                      await supabase.auth.signInWithOAuth(
-                        OAuthProvider.google,
-                        redirectTo:
-                            kIsWeb ? null : 'io.supabase.flutter://callback',
+                    onPressed: () {
+                      signInFunction();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const HomeScreen(),
+                        ),
                       );
                     },
                     icon: Image.asset('./assets/google.png', width: 50),
@@ -195,6 +193,16 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  void signInFunction() async {
+    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
+      return _nativeGoogleSignIn();
+    }
+    await supabase.auth.signInWithOAuth(
+      OAuthProvider.google,
+      redirectTo: kIsWeb ? null : 'io.supabase.flutter://callback',
     );
   }
 }

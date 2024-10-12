@@ -1,12 +1,12 @@
 import 'package:aloha/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 
 const menuConfig = [
   {'title': "Lock", 'icon': LucideIcons.lock},
   {'title': "Add to favourite", 'icon': LucideIcons.heart},
   {'title': "Share", 'icon': LucideIcons.share_2},
-  {'title': "Publish to web", 'icon': LucideIcons.square_arrow_out_up_right},
   {'title': "Delete", 'icon': LucideIcons.trash},
 ];
 
@@ -23,6 +23,21 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  final QuillController _controller = QuillController.basic();
+  @override
+  void initState() {
+    super.initState();
+    _controller.readOnly = true;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  bool canEdit = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +65,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
           floating: true,
           snap: true,
           actions: [
+            IconButton.filledTonal(
+                color: canEdit ? Colors.purple[200] : Colors.deepPurple,
+                icon: Icon(LucideIcons.pencil),
+                onPressed: () {
+                  setState(() {
+                    canEdit = !canEdit;
+                    _controller.readOnly = !canEdit;
+                    // print(canEdit);
+                  });
+                }),
             IconButton.filledTonal(
               icon: Icon(LucideIcons.ellipsis_vertical),
               onPressed: () {
@@ -98,36 +123,86 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ),
           ),
         ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-            child: Wrap(
-              spacing: 4,
-              children: [
-                FilledButton.tonalIcon(
-                    icon: Icon(LucideIcons.link),
-                    onPressed: () {},
-                    label: Text('Link')),
-                FilledButton.tonalIcon(
-                    icon: Icon(LucideIcons.image),
-                    onPressed: () {},
-                    label: Text('Image')),
-                FilledButton.tonalIcon(
-                    icon: Icon(LucideIcons.list),
-                    onPressed: () {},
-                    label: Text('List')),
-                FilledButton.tonalIcon(
-                    icon: Icon(LucideIcons.file),
-                    onPressed: () {},
-                    label: Text('File')),
-                FilledButton.tonalIcon(
-                    icon: Icon(LucideIcons.mic),
-                    onPressed: () {},
-                    label: Text('Audio')),
-              ],
+        // SliverToBoxAdapter(
+        //   child: Padding(
+        //     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+        //     child: Wrap(
+        //       spacing: 4,
+        //       children: [
+        //         IconButton.filledTonal(
+        //             icon: Icon(LucideIcons.link), onPressed: () {}),
+        //         IconButton.filledTonal(
+        //             icon: Icon(LucideIcons.image), onPressed: () {}),
+        //         IconButton.filledTonal(
+        //             icon: Icon(LucideIcons.file), onPressed: () {}),
+        //         IconButton.filledTonal(
+        //             icon: Icon(LucideIcons.mic), onPressed: () {}),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+        if (canEdit)
+          SliverToBoxAdapter(
+            child: QuillSimpleToolbar(
+              controller: _controller,
+              configurations: const QuillSimpleToolbarConfigurations(
+                toolbarIconAlignment: WrapAlignment.start,
+                buttonOptions: QuillSimpleToolbarButtonOptions(
+                    bold: QuillToolbarToggleStyleButtonOptions(
+                        iconData: LucideIcons.bold),
+                    italic: QuillToolbarToggleStyleButtonOptions(
+                        iconData: LucideIcons.italic),
+                    underLine: QuillToolbarToggleStyleButtonOptions(
+                        iconData: LucideIcons.underline),
+                    listBullets: QuillToolbarToggleStyleButtonOptions(
+                        iconData: LucideIcons.list),
+                    toggleCheckList: QuillToolbarToggleCheckListButtonOptions(
+                        iconData: LucideIcons.square_check)),
+                showUndo: false,
+                showRedo: false,
+                showFontFamily: false,
+                showFontSize: false,
+                showSubscript: false,
+                showSuperscript: false,
+                showCodeBlock: false,
+                showInlineCode: false,
+                showJustifyAlignment: false,
+                showClipboardCopy: false,
+                showClipboardCut: false,
+                showClipboardPaste: false,
+                showSearchButton: false,
+                showBackgroundColorButton: false,
+                showLink: false,
+                showQuote: false,
+                showIndent: false,
+                showDividers: false,
+                showColorButton: false,
+                showStrikeThrough: false,
+                showClearFormat: false,
+                // multiRowsDisplay: false,
+              ),
             ),
           ),
-        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              margin: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                color: giveCategoryGetColor(widget.category).withOpacity(0.4),
+              ),
+              child: QuillEditor.basic(
+                controller: _controller,
+                configurations: QuillEditorConfigurations(
+                  padding: const EdgeInsets.all(10),
+                  showCursor: canEdit,
+                  autoFocus: !canEdit,
+                ),
+              ),
+            ),
+          ),
+        )
         // SliverList.builder(
         //     itemCount: 20,
         //     itemBuilder: (_, index) {
