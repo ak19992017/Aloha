@@ -1,4 +1,3 @@
-import 'package:aloha/constant.dart';
 import 'package:aloha/tasks/tasks.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,7 @@ class _FoldersScreenState extends State<FoldersScreen> {
     {
       'title': 'work',
       'color': Colors.greenAccent.shade700,
-      'img': 'travel/image1.png'
+      'img': 'assets/travel.png'
     },
     {
       'title': 'code',
@@ -32,7 +31,8 @@ class _FoldersScreenState extends State<FoldersScreen> {
   final TextEditingController _textFieldController = TextEditingController();
 
   void _addTodoItem(String title) {
-    setState(() => folderList.add(title));
+    setState(() => folderList.add(
+        {'title': title, 'color': selectedColor, 'img': 'assets/pencil.png'}));
     _textFieldController.clear();
   }
 
@@ -43,15 +43,6 @@ class _FoldersScreenState extends State<FoldersScreen> {
         padding: const EdgeInsets.all(8.0),
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Categories',
-                  style: Theme.of(context).textTheme.displayMedium,
-                ),
-              ),
-            ),
             SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2),
@@ -76,7 +67,7 @@ class _FoldersScreenState extends State<FoldersScreen> {
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          // Image.asset('assets/${imageList[index]}'),
+                          Image.asset(folderList[index]['img']),
                           FittedBox(
                             child: Text(
                               folderList[index]['title'].toUpperCase(),
@@ -96,42 +87,15 @@ class _FoldersScreenState extends State<FoldersScreen> {
               ),
             ),
             SliverToBoxAdapter(
-              child: Card.filled(
-                child: InkWell(
-                  splashColor: Colors.blue.withAlpha(30),
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: selectedColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(LucideIcons.plus, color: Colors.white),
-                        TextButton(
-                          onPressed: () => _displayDialog(context),
-                          child: Text(
-                            'Add category',
-                            style: const TextStyle(
-                              fontSize: 25,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(8, 20, 8, 8),
-                child: Text(
-                  'Calender',
-                  style: Theme.of(context).textTheme.displayMedium,
+                padding: const EdgeInsets.all(16),
+                child: FilledButton.icon(
+                  icon: Icon(LucideIcons.plus, color: Colors.white),
+                  onPressed: () => _displayDialog(context),
+                  label: Text(
+                    'Add category',
+                    style: const TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ),
@@ -148,46 +112,68 @@ class _FoldersScreenState extends State<FoldersScreen> {
       context: context,
       builder: (BuildContext context) {
         return Dialog.fullscreen(
-          child: Column(
-            children: [
-              Text('Add category',
-                  style: Theme.of(context).textTheme.headlineLarge),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: _textFieldController,
-                  decoration: InputDecoration(hintText: 'Enter task here'),
-                ),
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text('Add category'),
+              elevation: 0,
+              centerTitle: true,
+              leading: IconButton.filledTonal(
+                icon: Icon(LucideIcons.chevron_left),
+                onPressed: () => Navigator.pop(context),
               ),
-              ColorPicker(
-                color: selectedColor,
-                onColorChanged: (Color newColor) =>
-                    setState(() => selectedColor = newColor),
-                borderRadius: 20,
-                subheading: const Text('Select a color for your widget'),
-              ),
-              // Cancel button
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
                 children: [
-                  TextButton(
-                    child: const Text('CANCEL'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      _textFieldController.clear();
-                    },
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        hintText: 'Enter task here',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(12),
+                          ),
+                        ),
+                      ),
+                      controller: _textFieldController,
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.name,
+                      textCapitalization: TextCapitalization.sentences,
+                    ),
                   ),
-                  // add button
-                  FilledButton(
-                    child: const Text('ADD'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      _addTodoItem(_textFieldController.text);
-                    },
+                  ColorPicker(
+                    color: selectedColor,
+                    onColorChanged: (Color newColor) =>
+                        setState(() => selectedColor = newColor),
+                    borderRadius: 20,
+                    subheading: const Text('Select a color for your widget'),
+                  ),
+                  // Cancel button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        child: const Text('CANCEL'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          _textFieldController.clear();
+                        },
+                      ),
+                      // add button
+                      FilledButton(
+                        child: const Text('ADD'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          _addTodoItem(_textFieldController.text.toString());
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         );
       },

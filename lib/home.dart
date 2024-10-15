@@ -1,12 +1,10 @@
 import 'package:aloha/auth/signin.dart';
 // ignore: unused_import
 import 'package:aloha/constant.dart';
-import 'package:aloha/social/social.dart';
 import 'package:aloha/tasks/add.dart';
 import 'package:aloha/tasks/folders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = "./home";
