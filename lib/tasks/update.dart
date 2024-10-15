@@ -1,11 +1,6 @@
-// ignore_for_file: avoid_print, unused_import
-
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:aloha/constant.dart';
 import 'package:flutter/material.dart';
-// import 'package:task_master/others/constants.dart';
-// import 'package:task_master/others/firestore_services.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
 class UpdateFoldersScreen extends StatefulWidget {
   const UpdateFoldersScreen({
@@ -13,14 +8,14 @@ class UpdateFoldersScreen extends StatefulWidget {
     required this.task,
     required this.desc,
     required this.category,
-    required this.completed,
-    required this.id,
+    // required this.completed,
+    // required this.id,
   });
-  final String id;
+  // final String id;
   final String task;
   final String desc;
   final String category;
-  final bool completed;
+  // final bool completed;
 
   @override
   State<UpdateFoldersScreen> createState() => _UpdateFoldersScreenState();
@@ -38,7 +33,7 @@ class _UpdateFoldersScreenState extends State<UpdateFoldersScreen> {
     _task = TextEditingController(text: widget.task);
     _desc = TextEditingController(text: widget.desc);
     _dropdownValue = widget.category;
-    _completed = widget.completed;
+    _completed = true;
   }
 
   @override
@@ -51,6 +46,10 @@ class _UpdateFoldersScreenState extends State<UpdateFoldersScreen> {
           // backgroundColor: giveCategoryGetColor(_dropdownValue),
           elevation: 0,
           centerTitle: true,
+          leading: IconButton.filledTonal(
+            icon: Icon(LucideIcons.chevron_left),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
         body: Form(
           child: Padding(
@@ -112,14 +111,15 @@ class _UpdateFoldersScreenState extends State<UpdateFoldersScreen> {
                         setState(() => _dropdownValue = newValue!),
                   ),
                   Switch(
-                      value: _completed,
-                      onChanged: (value) => setState(() => _completed = value)),
+                    value: _completed,
+                    onChanged: (value) => setState(() => _completed = value),
+                  ),
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
+                    child: FilledButton(
                       style: ButtonStyle(
                           // backgroundColor: WidgetStateProperty.all(
-                          // giveCategoryGetColor(_dropdownValue)),
+                          //     giveCategoryGetColor(_dropdownValue)),
                           padding: WidgetStateProperty.all(
                               const EdgeInsets.symmetric(vertical: 5))),
                       onPressed: () {

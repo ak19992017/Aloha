@@ -6,7 +6,6 @@ import 'package:aloha/tasks/add.dart';
 import 'package:aloha/tasks/folders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
-import 'package:flutter_quill/flutter_quill.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,9 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final screens = [
     Home(),
     FoldersScreen(),
-    Shop(),
-    Social(),
-    Pay(),
+    // Shop(),
+    // Social(),
+    // Pay(),
   ];
 
   @override
@@ -43,18 +42,18 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           tooltip: 'Add task',
           child: Icon(LucideIcons.plus)),
-      FloatingActionButton(
-          onPressed: () {},
-          tooltip: 'Cart',
-          child: Icon(LucideIcons.shopping_cart)),
-      FloatingActionButton(
-          onPressed: () {},
-          tooltip: 'Friends',
-          child: Icon(LucideIcons.message_circle)),
-      FloatingActionButton(
-          onPressed: () {},
-          tooltip: 'Scan QR',
-          child: Icon(Icons.qr_code_scanner)),
+      // FloatingActionButton(
+      //     onPressed: () {},
+      //     tooltip: 'Cart',
+      //     child: Icon(LucideIcons.shopping_cart)),
+      // FloatingActionButton(
+      //     onPressed: () {},
+      //     tooltip: 'Friends',
+      //     child: Icon(LucideIcons.message_circle),),
+      // FloatingActionButton(
+      //     onPressed: () {},
+      //     tooltip: 'Scan QR',
+      //     child: Icon(Icons.qr_code_scanner)),
     ];
 
     return SafeArea(
@@ -67,12 +66,12 @@ class _HomeScreenState extends State<HomeScreen> {
           destinations: const <Widget>[
             NavigationDestination(icon: Icon(LucideIcons.house), label: 'Home'),
             NavigationDestination(icon: Icon(LucideIcons.box), label: 'Tasks'),
-            NavigationDestination(
-                icon: Icon(LucideIcons.shopping_bag), label: 'Shop'),
-            NavigationDestination(
-                icon: Icon(LucideIcons.pyramid), label: 'Social'),
-            NavigationDestination(
-                icon: Icon(LucideIcons.indian_rupee), label: 'Pay'),
+            // NavigationDestination(
+            //     icon: Icon(LucideIcons.shopping_bag), label: 'Shop'),
+            // NavigationDestination(
+            //     icon: Icon(LucideIcons.pyramid), label: 'Social'),
+            // NavigationDestination(
+            //     icon: Icon(LucideIcons.indian_rupee), label: 'Pay'),
           ],
         ),
         body: Padding(
@@ -115,11 +114,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final User? user = supabase.auth.currentUser;
+  // final User? user = supabase.auth.currentUser;
 
-  void signOutFunction() async {
-    await supabase.auth.signOut();
-  }
+  // void signOutFunction() async {
+  //   await supabase.auth.signOut();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -127,10 +126,10 @@ class _HomeState extends State<Home> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(user!.email.toString()),
+          // Text(user!.email.toString()),
           FilledButton(
               onPressed: () {
-                signOutFunction();
+                // signOutFunction();
                 Navigator.of(context).popAndPushNamed(SignInScreen.routeName);
               },
               child: Text('Log Out')),

@@ -31,6 +31,7 @@ class _MyAppState extends State<MyApp> {
         fontFamily: 'Poppins',
         useMaterial3: true,
         brightness: Brightness.light,
+        // platform: TargetPlatform.iOS,
       ),
       initialRoute: SplashScreen.routeName,
       routes: {
